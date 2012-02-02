@@ -1,0 +1,96 @@
+<html>
+<head>
+	<script type="text/javascript" src="../src/requires/domready.min.js"></script>
+	<script type="text/javascript" src="../src/requires/simpleselector.min.js"></script>
+	<script type="text/javascript" src="../src/jlim-core.js"></script>
+	<script type="text/javascript">
+
+// Extend jLim functions
+jLim.fn.extend({
+	setBgColor: function (color) {
+		return this.each(function () {
+			if (!color) color = '#ccc';
+			this.style.backgroundColor = color;
+		});
+	},
+
+	setBold: function () {
+		return this.each(function () {
+			this.style.fontWeight = 'bold';
+		});
+	},
+
+	setFontSize: function () {
+		return this.each(function () {
+			this.style.fontSize = '25px';
+		});
+	}
+});
+
+// When DOM is ready
+jLim(function ($) {
+
+	// set button click events
+	$('#btn-test1').get(0).onclick = function () {
+		$('li').setBold();
+	};
+
+	$('#btn-test2').get(0).onclick = function () {
+		$('li span').setFontSize();
+	};
+
+	$('#btn-test3').get(0).onclick = function () {
+		$('#btn-test3, ul li span').setBgColor('red');
+	};
+
+	$('#btn-test4').get(0).onclick = function () {
+		// chain...
+		$(document.body)
+			.find('ul')
+				.find('li')
+					.setBgColor('#eee')
+				.end()
+			.end()
+			.find('p')
+				.eq(-1) // get last p-element
+					.setBgColor('#666')
+				.end();
+	};
+
+	$('#btn-test5').get(0).onclick = function () {
+		// each method
+		$.each(['#wrap', 'h1'], function (i, v) {
+			var els = $(v).get();
+
+			$.each(els, function () {
+				this.style.color = '#f00'
+			});
+		});
+	};
+
+});
+
+	</script>
+	<style type="text/css">
+		.dark { font-weight:bold; background:#000; color:#fff; }
+	</style>
+</head>
+<body id="wrap">
+	<h1>jLim Core</h1>
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin egestas commodo urna, sit amet cursus metus porta in. Curabitur et nunc orci, vitae tincidunt ipsum.
+	</p>
+	<ul>
+		<li>Lorem ipsum</li>
+		<li>Lorem ipsum</li>
+		<li><span>Lorem ipsum</span></li>
+		<li>Lorem ipsum</li>
+	</ul>
+	<p>
+		<button id="btn-test1"><span>$( 'li' ).setBold()</span></button>
+		<button id="btn-test2"><span>$( 'li span' ).setFontSize()</span></button>
+		<button id="btn-test3"><span>$( '#btn-test3, ul li span' ).setBgColor( 'red' )</span></button>
+		<button id="btn-test4"><span>Chaining</span></button>
+		<button id="btn-test5"><span>.each method</span></button>
+	</p>
+</body>
+</html>
