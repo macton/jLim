@@ -107,8 +107,13 @@ test('$.create()', function () {
 	var html = '<ul><li>example 1</li><li>example 2</li></ul>',
 		el = $.create(html);
 
-	expect(1);
-	strictEqual(el.innerHTML, '<li>example 1</li><li>example 2</li>');
+	expect(6);
+	strictEqual(el.tagName.toUpperCase(), 'UL');
+	strictEqual(el.childNodes.length, 2);
+	strictEqual(el.childNodes[0].tagName.toUpperCase(), 'LI');
+	strictEqual(el.childNodes[0].innerHTML, 'example 1');
+	strictEqual(el.childNodes[1].tagName.toUpperCase(), 'LI');
+	strictEqual(el.childNodes[1].innerHTML, 'example 2');
 });
 
 test('$.each()', function () {
