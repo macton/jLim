@@ -11,7 +11,7 @@ $timestamp = time();
 	<script type="text/javascript" src="qunit/qunit.js"></script>
 	<script type="text/javascript" src="../src/requires/domready.min.js"></script>
 	<script type="text/javascript" src="../src/requires/simpleselector.min.js"></script>
-	<script type="text/javascript" src="../src/jlim-core<?php echo ( $testMinified ) ? '.min' : '' ?>.js?nocache=<?php echo $timestamp ?>"></script>
+	<script type="text/javascript" src="../src/<?php echo ( $testMinified ) ? 'minified/jlim-core.min.js' : 'jlim-core.js' ?>?nocache=<?php echo $timestamp ?>"></script>
 	<script type="text/javascript" src="unit/jlim-core.js?nocache=<?php echo $timestamp ?>"></script>
 </head>
 <body id="body">

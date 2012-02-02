@@ -138,7 +138,7 @@ jLim.fn = {
 	 * Call function for each element
 	 * @param {Function} fn
 	 * @param {Array} args
-	 * @return {this} For chaining
+	 * @return {This}
 	 */
 	each: function (fn) {
 		jLim.each(this.els, fn);

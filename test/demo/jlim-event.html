@@ -1,0 +1,258 @@
+<html>
+<head>
+	<script type="text/javascript" src="../../src/requires/domready.min.js"></script>
+	<script type="text/javascript" src="../../src/requires/simpleselector.min.js"></script>
+	<script type="text/javascript" src="../../src/minified/jlim-core.min.js"></script>
+	<script type="text/javascript" src="../../src/minified/jlim-event.min.js"></script>
+	<script type="text/javascript">
+
+// on DOM ready
+jLim(function ($) {
+
+	var str = '',
+		str2 = '',
+		fn1 = function() {
+			str += 'run fn1()\n';
+		},
+		fn2 = function() {
+			str += 'run fn2()\n';
+		},
+		fn3 = function() {
+			str2 += 'run fn3()\n';
+		},
+		fn4 = function() {
+			str2 += 'run fn4()\n';
+		},
+		fn5 = function() {
+			str2 += 'run fn5()\n';
+		},
+		fn6 = function(){
+			alert( 'ok' );
+		};
+
+	$('#b0').click(function () {
+		$('#b1').trigger('click');
+		alert(str || 'none');
+		str = '';
+	});
+
+	$('#b2').bind('click', function () {
+		$('#b1').bind('click', fn1);
+	});
+
+	$('#b3').bind('click', function () {
+		$('#b1').bind('click', fn2);
+	});
+
+	$('#b4').bind('click', function () {
+		$('#b1').unbind('click', fn1);
+	});
+
+	$('#b5').bind('click', function () {
+		$('#b1').unbind('click', fn2);
+	});
+
+	// attach custom event
+	$('#b6').bind('custom', function () { alert('custom'); });
+
+	$('#b6').bind('click', function () {
+		$(this).trigger('custom');
+	});
+
+	/**
+	 * Event delegation
+	 */
+	$('#c1').click(function () {
+		$('ul').each(function () {
+			var a = $('<li><a href="#c1">Test</a></li>').get(0);
+			this.appendChild(a);
+		});
+	});
+
+	$('ul').delegate('li a', 'click', function (e) {
+		alert('delegated: make link red');
+		this.style.color = '#f00';
+		e.preventDefault();
+	});
+
+	// block third link
+	$('ul li a').eq(2).click(function (e) {
+		alert('Prevent delegation by using: e.stopPropagation();');
+		e.stopPropagation();
+		e.preventDefault();
+	});
+
+
+	/**
+	 * Namespace
+	 */
+	$('#d0').click(function () {
+		$('#d1').trigger('click');
+		alert(str2 || 'none');
+		str2 = '';
+	});
+
+	$('#d2').click(function () {
+		$('#d1').bind('click:form', fn3);
+	});
+
+	$('#d3').click(function () {
+		$('#d1').bind('click.test', fn4);
+	});
+
+	$('#d4').click(function () {
+		$('#d1').bind('click', fn5);
+	});
+
+	$('#d5').click(function () {
+		$('#d1').unbind('click.form');
+	});
+
+	$('#d6').click(function () {
+		$('#d1').unbind('click:test');
+	});
+
+	$('#d7').click(function () {
+		$('#d1').unbind('click');
+	});
+
+	// attach custom event
+	$('#d8')
+		.bind('custom', function(){ alert('custom'); })
+		.bind('custom.test', function(){ alert('custom.test'); })
+		.click(function () {
+			$(this).trigger('custom');
+		});
+
+	/**
+	 * Multiple events
+	 */
+	$('#e2').click(function () {
+		$('#e1').bind('click keypress', fn6);
+	});
+
+	$('#e3').click(function () {
+		$('#e1').unbind('click keypress', fn6);
+	});
+
+	$('#e4').click(function () {
+		$('#e1').trigger('click keypress');
+	});
+
+	/*
+	// doesn't work
+	var q = $('#e1').get(0),
+		addEvent = function (el, eName, fn){
+			if ( el.attachEvent ) {
+				el.attachEvent( 'on'+ eName, fn, false );
+			} else if ( el.addEventListener ) {
+				el.addEventListener( eName, fn, false );
+			}
+		};
+
+	addEvent(q, 'click', function(){ alert('addEventListener 1'); });
+	q.onclick = function () {
+		alert('blabla');
+	};
+	addEvent(q, 'click', function(){ alert('addEventListener 2'); });
+	addEvent(q, 'click', function(){ alert('addEventListener 3'); });
+	*/
+
+	/**
+	 * Custom event object passed as param to handlers
+	 */
+
+	// keypress
+	$('#char').keypress(function(e) {
+		var html = '&nbsp;&nbsp;';
+		html += 'e.keyCode: '+ e.keyCode +'&nbsp;-&nbsp;';
+		html += 'e.charCode '+ e.charCode +'&nbsp;-&nbsp;';
+		html += 'e.which '+ e.which +'&nbsp;&nbsp;';
+		$('#char_output').get(0).innerHTML = html;
+	});
+
+	$('#link').click(function(e) {
+		alert('Link clicked! ( link will not open by using: e.preventDefault() )');
+		e.preventDefault();
+	});
+
+});
+
+	</script>
+	<style type="text/css">
+		button { width:200px; }
+	</style>
+</head>
+<body>
+		<h1>jLim Event</h1>
+
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin egestas commodo urna, sit amet cursus metus porta in. Curabitur et nunc orci, vitae tincidunt ipsum.
+		</p>
+		<p>
+			<button id="b0">.click()</button>
+			<button id="b1" style="display:none"></button>
+			<br />
+			<button id="b2">.bind( 'click', fn1 )</button>
+			<button id="b3">.bind( 'click', fn2 )</button>
+			<button id="b3">.bind( 'click', fn2 )</button>
+			<br />
+			<button id="b4">.unbind( 'click', fn1 )</button>
+			<button id="b5">.unbind( 'click', fn2 )</button>
+			<br />
+			<button id="b6">.trigger( 'custom' )</button>
+		</p>
+
+		<h2>Event delegation</h2>
+		<p>For delegating these links the following code is used:</p>
+<code>
+$( 'ul' ).delegate( 'li a', 'click', function ( e ){
+<br />&nbsp;&nbsp;&nbsp;&nbsp;alert( 'delegated: make link red' );
+<br />&nbsp;&nbsp;&nbsp;&nbsp;this.style.color = '#f00';
+<br />});
+</code>
+		<ul>
+			<li><a href="#c1">Test</a></li>
+			<li><a href="#c1">Test</a></li>
+			<li><a href="#c1">Test (blocked delegation)</a></li>
+		</ul>
+		<p>
+			<button id="c1">Add link</button>
+		</p>
+
+
+		<h2>Name space (only one level)</h2>
+		<p>Create namespace by using . or : (f.e. click.form or click:form).</p>
+		<p>
+			<button id="d0">.click()</button>
+			<button id="d1" style="display:none"></button>
+			<br />
+			<button id="d2">.bind( 'click.form', fn3 )</button>
+			<button id="d3">.bind( 'click.test', fn4 )</button>
+			<button id="d4">.bind( 'click', fn5 )</button>
+			<br />
+			<button id="d5">.unbind( 'click.form' )</button>
+			<button id="d6">.unbind( 'click:test' )</button>
+			<button id="d7">.unbind( 'click' )</button>
+			<br />
+			<button id="d8">.trigger( 'custom' )</button>
+		</p>
+
+		<h2>Multipe events</h2>
+		<p>It's possible to pass multiple events as param.</p>
+		<p>
+			<input type="text" id="e1" />
+			<br />
+			<button id="e2">.bind( 'click keypress', fn6 )</button>
+			<br />
+			<button id="e3">.unbind( 'click keypress', fn6 )</button>
+			<br />
+			<button id="e4">.trigger( 'click keypress' )</button>
+		</p>
+
+
+		<h2>Custom event object passed as param</h2>
+		<p><a id="link" href="http://www.freelancephp.net" target="_blank">Link</a>
+			<br/><input type="text" id="char" /><span id="char_output"></span>
+		</p>
+</body>
+</html>

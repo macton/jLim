@@ -1,0 +1,62 @@
+<html>
+<head>
+	<script type="text/javascript" src="../../src/requires/domready.min.js"></script>
+	<script type="text/javascript" src="../../src/requires/simpleselector.min.js"></script>
+	<script type="text/javascript" src="../../src/minified/jlim-core.min.js"></script>
+	<script type="text/javascript" src="../../src/minified/jlim-css.min.js"></script>
+	<script type="text/javascript">
+
+// when DOM is ready
+jLim(function ($) {
+
+	// set button click events
+	$('#btn-test1').get(0).onclick = function () {
+		$('li span').addClass('dark');
+		$('#hasclass').get(0).innerHTML = 'hasClass: ' +(!!$('li span').hasClass('dark'));
+	};
+
+	$('#btn-test2').get(0).onclick = function () {
+		$('li span').removeClass('dark');
+		$('#hasclass').get(0).innerHTML = 'hasClass: ' +(!!$('li span').hasClass('dark'));
+	};
+
+	$('#btn-test3').get(0).onclick = function () {
+		$('p').eq(0).style('background-color', 'red');
+	};
+
+	$('#btn-test4').get(0).onclick = function () {
+		$('#styles').style({
+			'color': 'green',
+			'font-weight': 'bold',
+			'background-color': '#ccc',
+			'text-transform': 'capitalize',
+			'text-decoration': 'underline'
+		});
+	};
+
+});
+
+	</script>
+	<style type="text/css">
+		.dark { font-weight:bold; background:#000; color:#fff; }
+	</style>
+</head>
+<body id="wrap">
+	<h1>jLim CSS</h1>
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin egestas commodo urna, sit amet cursus metus porta in. Curabitur et nunc orci, vitae tincidunt ipsum.
+	</p>
+	<ul>
+		<li id="styles">Lorem ipsum</li>
+		<li>Lorem ipsum</li>
+		<li><span>Lorem ipsum</span></li>
+		<li>Lorem ipsum</li>
+	</ul>
+	<p id="hasclass"></p>
+	<p>
+		<button id="btn-test1"><span>.addClass( 'dark' )</span></button>
+		<button id="btn-test2"><span>.removeClass( 'dark' )</span></button>
+		<button id="btn-test3"><span>.style( 'backgroundColor', 'red' )</span></button>
+		<button id="btn-test4"><span>.style({ .... })</span></button>
+	</p>
+</body>
+</html>

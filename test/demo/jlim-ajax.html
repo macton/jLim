@@ -1,0 +1,83 @@
+<html>
+<head>
+	<script type="text/javascript" src="../../src/requires/domready.min.js"></script>
+	<script type="text/javascript" src="../../src/requires/simpleselector.min.js"></script>
+	<script type="text/javascript" src="../../src/minified/jlim-core.min.js"></script>
+	<script type="text/javascript" src="../../src/minified/jlim-dom.min.js"></script>
+	<script type="text/javascript" src="../../src/minified/jlim-ajax.min.js"></script>
+	<script type="text/javascript">
+
+// when DOM is ready
+jLim(function ($) {
+
+	var splitUrl = location.href.split('jlim-ajax.html'),
+		baseUrl = splitUrl[0],
+		ajaxUrl = baseUrl +'content.html',
+		setHTML = function (el, html) {
+			var newdiv = document.createElement('div');
+			newdiv.innerHTML = html;
+			el.innerHTML = '';
+			el.appendChild(newdiv);
+		};
+
+	// set button click events
+	$('#btn-test1').get(0).onclick = function () {
+		$.ajax({
+			url: ajaxUrl,
+			cache: false,
+			type: 'POST',
+			async: true,
+			data: {
+				test: 2,
+				ok: 'pp'
+			},
+			success: function (data) {
+				setHTML($('#ajax1').get(0), data);
+				$('#ajax1').get(0).style.backgroundColor = '#eee';
+			},
+			error: function () {
+				$('#ajax1').get(0).style.backgroundColor = 'red';
+			},
+			complete: function () {
+				$('#ajax1').get(0).style.fontWeight = 'bold';
+			}
+		});
+	};
+
+	$('#btn-test2').get(0).onclick = function () {
+		$.get(ajaxUrl, function(data) {
+			setHTML($('#ajax2').get(0), data);
+			$('#ajax2').get(0).style.backgroundColor = '#eee';
+		});
+	};
+
+	$('#btn-test3').get(0).onclick = function () {
+		$.post(ajaxUrl, {post_var1:'test'}, function (data) {
+			setHTML($('#ajax3').get(0), data);
+			$('#ajax3').get(0).style.backgroundColor = '#eee';
+		});
+	};
+
+	$('#btn-test4').get(0).onclick = function () {
+		$('#ajax4').load(ajaxUrl);
+		$('#ajax4').get(0).style.backgroundColor = '#eee';
+	};
+
+});
+
+	</script>
+</head>
+<body id="wrap">
+	<h1>jLim Ajax</h1>
+	<p id="ajax1">1) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin egestas commodo urna, sit amet cursus metus porta in. Curabitur et nunc orci, vitae tincidunt ipsum.</p>
+	<p id="ajax2">2) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin egestas commodo urna, sit amet cursus metus porta in. Curabitur et nunc orci, vitae tincidunt ipsum.</p>
+	<p id="ajax3">3) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin egestas commodo urna, sit amet cursus metus porta in. Curabitur et nunc orci, vitae tincidunt ipsum.</p>
+	<p id="ajax4">4) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin egestas commodo urna, sit amet cursus metus porta in. Curabitur et nunc orci, vitae tincidunt ipsum.</p>
+	<p>
+		<button id="btn-test1"><span>jLim.ajax()</span></button>
+		<button id="btn-test2"><span>jLim.get()</span></button>
+		<button id="btn-test3"><span>jLim.post()</span></button>
+		<button id="btn-test4"><span>$().load()</span></button>
+	</p>
+</body>
+</html>

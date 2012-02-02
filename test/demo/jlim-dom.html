@@ -1,0 +1,108 @@
+<html>
+<head>
+	<script type="text/javascript" src="../../src/requires/domready.min.js"></script>
+	<script type="text/javascript" src="../../src/requires/simpleselector.min.js"></script>
+	<script type="text/javascript" src="../../src/minified/jlim-core.min.js"></script>
+	<script type="text/javascript" src="../../src/minified/jlim-dom.min.js"></script>
+	<script type="text/javascript">
+
+// when DOM is ready
+jLim(function ($) {
+
+	// set button click events
+	$('#btn-test1').get(0).onclick = function () {
+		$('input')
+			.eq(0)
+				.attr( 'checked', true )
+				.removeAttr( 'disabled' )
+			.end()
+			.eq(1)
+				.attr({
+					'checked': false,
+					'disabled': true,
+					'value': 5
+				});
+
+		$('#cb2_val').get(0).innerHTML = $('input').eq(1).attr('value');
+	};
+
+	$('#btn-test2').get(0).onclick = function () {
+		$('li')
+			.eq(0)
+				.empty()
+			.end()
+			.eq(1)
+				.html('<strong>-- New Content --</strong>')
+			.end()
+			.eq(3)
+				.text('<strong>-- New Content --</strong>');
+	};
+
+	$('#btn-test3').get(0).onclick = function () {
+		$('ul')
+			.eq(0)
+			.clone()
+				.appendTo('body')
+				.find('li')
+					.slice(0, 2)
+						.remove()
+					.end()
+				.end()
+				.prepend('<li>Prepend item</li>')
+				.append('<li>Append item</li>');
+
+		$('<p>Prepend paragraph</p>').prependTo($('ul').eq(1));
+	};
+
+	$('#btn-test4').get(0).onclick = function () {
+		$('li')
+			.before('<li><strong>- Before -</strong></li>')
+			.after('<li><strong>- After -</strong></li>');
+	};
+
+	$('#btn-test5').get(0).onclick = function () {
+		$('ul')
+			.find('li span')
+				.replaceWith('<em>Replaced</em>');
+	};
+
+});
+
+	</script>
+	<style type="text/css">
+		.dark { font-weight:bold; background:#000; color:#fff; }
+	</style>
+</head>
+<body id="wrap">
+	<h1>jLim DOM</h1>
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin egestas commodo urna, sit amet cursus metus porta in. Curabitur et nunc orci, vitae tincidunt ipsum.
+	</p>
+	<ul>
+		<li>1) Lorem ipsum</li>
+		<li>2) Lorem ipsum</li>
+		<li><span>3) Lorem ipsum</span></li>
+		<li>4) Lorem ipsum</li>
+	</ul>
+	<form>
+		<fieldset>
+			<dl>
+				<dt><label for="cb1">Checkbox 1</label></dt>
+				<dt><input type="checkbox" name="cb1" id="cb1" value="1" disabled="disabled" /></dt>
+				<dt><label for="cb2">Checkbox 2</label></dt>
+				<dt><input type="checkbox" name="cb2" id="cb2" value="1" checked="checked" />
+					Value:
+					<span id="cb2_val">1</span></dt>
+			</dl>
+		</fieldset>
+	</form>
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin egestas commodo urna, sit amet cursus metus porta in. Curabitur et nunc orci, vitae tincidunt ipsum.
+	</p>
+	<p>
+		<button id="btn-test1"><span>.attr() | .removeAttr()</span></button>
+		<button id="btn-test2"><span>.html() | .empty() | .text()</span></button>
+		<button id="btn-test3"><span>.clone() | .remove() | .append() | .prepend()</span></button>
+		<button id="btn-test4"><span>.after() | .before()</span></button>
+		<button id="btn-test5"><span>.replaceWith()</span></button>
+	</p>
+</body>
+</html>
