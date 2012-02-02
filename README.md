@@ -5,6 +5,7 @@ jLim is a very small JavaScript framework (~11kb minified) and contains the most
 Especially usefull for smaller websites and for creating your own custom framework.
 
 jLim contains the following modules:
+
 * Core
 * DOM
 * CSS
@@ -12,6 +13,7 @@ jLim contains the following modules:
 * Ajax
 
 And also includes the external objects:
+
 * [DOMReady](https://github.com/freelancephp/DOMReady)
 * [SimpleSelector](https://github.com/freelancephp/SimpleSelector)
 
