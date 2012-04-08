@@ -516,6 +516,26 @@ test('.slice()', function () {
 	strictEqual($slice3.els[0], el('btn-test4'));
 });
 
+test('.index()', function () {
+	var $sel = $('#controlClass1 button');
+
+	expect(9);
+	strictEqual($sel.els.length, 5);
+
+	strictEqual($sel.index('#btn-test4'), 3);
+	strictEqual($sel.index(document.getElementById('btn-test4')), 3);
+	strictEqual($sel.index($('#btn-test4')), 3);
+
+	// more
+	strictEqual($sel.index('#controlClass1 button'), 0);
+	strictEqual($sel.index('#btn-test2, #btn-test3'), 1);
+	strictEqual($sel.index('#btn-test3, #btn-test1'), 2);
+
+	// doesn't exists
+	strictEqual($sel.index('#controlClass2'), null);
+	strictEqual($sel.index(null), null);
+});
+
 test('.end()', function () {
 	var $sel = $('#wrap'),
 		$chain = $sel.chain('#controlClass1'),

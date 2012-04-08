@@ -180,12 +180,28 @@ jLim.fn = {
 	/**
 	 * Set slice of current elements as new jLim object
 	 * @param {Integer} start Like the first param of the standard Array.slice() function
-	 * @param {Integer} end Like the second param of the standard Array.slice() function
+	 * @param {Integer} [end] Like the second param of the standard Array.slice() function
 	 * @return {jLim.fn.init} Instance of new selection
 	 */
 	slice: function (start, end) {
 		var els = this.els.slice(start, end || this.els.length);
 		return this.chain(els);
+	},
+
+	/**
+	 * Get index of given element
+	 * @param {String|DOMElement|DOMElement[]} When more than one element, only the index of the first will be returned
+	 * @return {Integer} Index of given element
+	 */
+	index: function (element) {
+		var el = jLim(element).get(0);
+
+		for (var x = 0, y = this.length; x < y; x++) {
+			if (this.els[x] === el)
+				return x;
+		}
+
+		return null;
 	},
 
 	/**
