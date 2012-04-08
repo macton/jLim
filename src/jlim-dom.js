@@ -9,7 +9,9 @@
  * @author Victor Villaverde Laan
  * @link http://www.freelancephp.net/jlim-dom-plugin/
  */
-jLim.fn.extend(
+(function ($) {
+
+$.fn.extend(
 	/**
 	 * @lends jLim.fn
 	 */
@@ -109,7 +111,7 @@ jLim.fn.extend(
 			// setter, first empty element content and then add text
 			return this.empty().each(function () {
 				var textNode = document.createTextNode(text);
-				jLim(this).append(textNode);
+				$(this).append(textNode);
 			});
 		},
 
@@ -129,7 +131,7 @@ jLim.fn.extend(
 		* @return {This}
 		*/
 		append: function (content) {
-			var $content = jLim(content);
+			var $content = $(content);
 
 			return this.each(function (i) {
 				var target = this;
@@ -150,7 +152,7 @@ jLim.fn.extend(
 		* @return {This}
 		*/
 		prepend: function (content) {
-			var $content = jLim(content);
+			var $content = $(content);
 
 			return this.each(function (i) {
 				// clone content when more then one targets
@@ -159,7 +161,7 @@ jLim.fn.extend(
 				if (this.childNodes.length > 0) {
 					$content.insertBefore(this.childNodes[0]);
 				} else {
-					jLim(this).append($content);
+					$(this).append($content);
 				}
 			});
 		},
@@ -170,7 +172,7 @@ jLim.fn.extend(
 		* @return {This}
 		*/
 		appendTo: function (target) {
-			jLim(target).append(this);
+			$(target).append(this);
 			return this;
 		},
 
@@ -180,7 +182,7 @@ jLim.fn.extend(
 		* @return {This}
 		*/
 		prependTo: function (target) {
-			jLim(target).prepend(this);
+			$(target).prepend(this);
 			return this;
 		},
 
@@ -190,7 +192,7 @@ jLim.fn.extend(
 		* @return {This}
 		*/
 		insertAfter: function (target) {
-			var $target = jLim(target),
+			var $target = $(target),
 				self = this;
 
 			$target.each(function(i) {
@@ -220,7 +222,7 @@ jLim.fn.extend(
 		* @return {This}
 		*/
 		insertBefore: function (target) {
-			var $target = jLim(target),
+			var $target = $(target),
 				self = this;
 
 			$target.each(function (i) {
@@ -243,7 +245,7 @@ jLim.fn.extend(
 		* @return {This}
 		*/
 		after: function (content) {
-			jLim(content).insertAfter(this);
+			$(content).insertAfter(this);
 			return this;
 		},
 
@@ -253,7 +255,7 @@ jLim.fn.extend(
 		* @return {This}
 		*/
 		before: function (content) {
-			jLim(content).insertBefore(this);
+			$(content).insertBefore(this);
 			return this;
 		},
 
@@ -263,7 +265,7 @@ jLim.fn.extend(
 		* @return {This}
 		*/
 		replaceWith: function (content) {
-			var $content = jLim(content);
+			var $content = $(content);
 
 			return this.each(function (i) {
 				// clone content when more then one targets
@@ -292,7 +294,7 @@ jLim.fn.extend(
 					clone = this.cloneNode(true);
 				} else if (typeof this == 'object') {
 					// clone object or array
-					clone = jLim.extend({}, this);
+					clone = $.extend({}, this);
 				} else {
 					clone = this;
 				}
@@ -304,3 +306,5 @@ jLim.fn.extend(
 		}
 	}
 );
+
+})(jLim);

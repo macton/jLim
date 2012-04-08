@@ -9,7 +9,9 @@
  * @author Victor Villaverde Laan
  * @link http://www.freelancephp.net/jlim-css-plugin/
  */
-jLim.fn.extend(
+(function ($) {
+
+$.fn.extend(
 	/**
 	 * @lends jLim.fn
 	 */
@@ -21,7 +23,7 @@ jLim.fn.extend(
 		*/
 		addClass: function (value) {
 			return this.each(function () {
-				if (!jLim( this ).hasClass(value))
+				if (!$(this).hasClass(value))
 					this.className += ' '+ value;
 			});
 		},
@@ -59,7 +61,7 @@ jLim.fn.extend(
 			if (typeof value == 'undefined') {
 				if (typeof style == 'string') {
 					// getter
-					key = jLim.toCamelCase(style);
+					key = $.toCamelCase(style);
 					return this.length ? this.get(0).style[key] : null;
 				} else {
 					// setter multiple styles
@@ -71,7 +73,7 @@ jLim.fn.extend(
 			}
 
 			// setter
-			key = jLim.toCamelCase(style);
+			key = $.toCamelCase(style);
 
 			return this.each(function () {
 				if (typeof this.style[key] != 'undefined')
@@ -81,7 +83,7 @@ jLim.fn.extend(
 	}
 );
 
-jLim.extend(
+$.extend(
 	/**
 	 * @lends jLim
 	 */
@@ -99,3 +101,5 @@ jLim.extend(
 		}
 	}
 );
+
+})(jLim);
