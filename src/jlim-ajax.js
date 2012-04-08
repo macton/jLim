@@ -18,12 +18,12 @@ $.fn.extend(
 	 */
 	{
 		/**
-		* Set content loaded by an ajax call
-		* @param {String} url The url of the ajax call (include GET vars in querystring)
-		* @param {String} [data] The POST data, when set method will be set to POST
-		* @param {Function} [complete] Callback when loading is completed
-		* @return {This}
-		*/
+		 * Set content loaded by an ajax call
+		 * @param {String} url The url of the ajax call (include GET vars in querystring)
+		 * @param {String} [data] The POST data, when set method will be set to POST
+		 * @param {Function} [complete] Callback when loading is completed
+		 * @return {This}
+		 */
 		load: function (url, data, complete) {
 			var self = this;
 
@@ -49,36 +49,35 @@ $.extend(
 	{
 
 		/**
-		* Default ajax settings
-		* @property {Object} ajaxSettings
-		*/
-		ajaxSettings: SimpleAjax.settings,
+		 * @namespace jLim.Ajax
+		 */
+		Ajax: SimpleAjax,
 
 		/**
-		* Change the default ajax settings
-		* @param {Object} settings Overwrite the default settings, see ajaxSettings
-		*/
+		 * Change the default ajax settings
+		 * @param {Object} settings Overwrite the default settings
+		 */
 		ajaxSetup: function (settings) {
-			$.extend($.ajaxSettings, settings);
+			$.extend(SimpleAjax.settings, settings);
 		},
 
 		/**
-		* Ajax call
-		* @param {Object} [options] Overwrite the default settings for this call, see ajaxSettings
-		* @return {XMLHttpRequest|ActiveXObject}
-		*/
+		 * Ajax call
+		 * @param {Object} [options] Overwrite the default settings for this call, see ajaxSettings
+		 * @return {XMLHttpRequest|ActiveXObject}
+		 */
 		ajax: function (options) {
 			SimpleAjax.call(options);
 			return SimpleAjax.xhr;
 		},
 
 		/**
-		* Ajax GET request
-		* @param {String} url
-		* @param {String|Object} [data] Containing GET values
-		* @param {Function} [success] Callback when request was succesfull
-		* @return {XMLHttpRequest|ActiveXObject}
-		*/
+		 * Ajax GET request
+		 * @param {String} url
+		 * @param {String|Object} [data] Containing GET values
+		 * @param {Function} [success] Callback when request was succesfull
+		 * @return {XMLHttpRequest|ActiveXObject}
+		 */
 		get: function (url, data, success) {
 			if ($.isFunction(data)) {
 				success = data;
@@ -94,12 +93,12 @@ $.extend(
 		},
 
 		/**
-		* Ajax POST request
-		* @param {String} url
-		* @param {String|Object} [data] Containing post values
-		* @param {Function} [success] Callback when request was succesfull
-		* @return {XMLHttpRequest|ActiveXObject}
-		*/
+		 * Ajax POST request
+		 * @param {String} url
+		 * @param {String|Object} [data] Containing post values
+		 * @param {Function} [success] Callback when request was succesfull
+		 * @return {XMLHttpRequest|ActiveXObject}
+		 */
 		post: function (url, data, success) {
 			if ($.isFunction(data)) {
 				success = data;
@@ -115,6 +114,5 @@ $.extend(
 		}
 	}
 );
-
 
 })(jLim, SimpleAjax);
