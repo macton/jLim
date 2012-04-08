@@ -7,3 +7,6 @@
 [submodule "src/external/simpleselector"]
 	path = src/external/simpleselector
 	url = git@github.com:freelancephp/SimpleSelector.git
+[submodule "src/external/simpleajax"]
+	path = src/external/simpleajax
+	url = git@github.com:freelancephp/SimpleAjax.git
