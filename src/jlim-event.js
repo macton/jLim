@@ -165,12 +165,12 @@ $.fn.extend(
 	 */
 	{
 		/**
-		* Add function to event
-		* @param {String} eventName Event name
-		* @param {Function} fn Function to add to event
-		* @param {Number} [insertIndex] Insert function at given index
-		* @return {This}
-		*/
+		 * Add function to event
+		 * @param {String} eventName Event name
+		 * @param {Function} fn Function to add to event
+		 * @param {Number} [insertIndex] Insert function at given index
+		 * @return {This}
+		 */
 		bind: function (eventName, fn, insertIndex) {
 			var events = eventName.split(' ');
 
@@ -182,11 +182,11 @@ $.fn.extend(
 		},
 
 		/**
-		* Remove function from event
-		* @param {String} eventName Event name
-		* @param {Function} [fn] Function to remove from event listener
-		* @return {This}
-		*/
+		 * Remove function from event
+		 * @param {String} eventName Event name
+		 * @param {Function} [fn] Function to remove from event listener
+		 * @return {This}
+		 */
 		unbind: function (eventName, fn) {
 			var events = eventName.split(' ');
 
@@ -216,31 +216,33 @@ $.fn.extend(
 		},
 
 		/**
-		* Trigger event
-		* @param {Sstring} eventName Event name
-		* @return {This}
-		*/
-		trigger: function (eventName) {
-			var events = eventName.split(' ');
+		 * Trigger event
+		 * @param {String} eventName Event name
+		 * @param {Arrat} args Extra params
+		 * @return {This}
+		 */
+		trigger: function (eventName, args) {
+			var events = eventName.split(' '),
+				params = [getEvent()].concat(args);
 
 			return this.each(function () {
 				for (var key in events) {
 					if ($.isFunction(this['on'+ events[key]])) {
 						this['on'+ events[key]].call(this);
 					} else {
-						triggerEvent(this, events[key], [getEvent()]);
+						triggerEvent(this, events[key], params);
 					}
 				}
 			});
 		},
 
 		/**
-		* Delegate event handlers to a parent element
-		* @param {String} selector
-		* @param {String} eventName Event name
-		* @param {Function} fn Function to add to event
-		* @return {This}
-		*/
+		 * Delegate event handlers to a parent element
+		 * @param {String} selector
+		 * @param {String} eventName Event name
+		 * @param {Function} fn Function to add to event
+		 * @return {This}
+		 */
 		delegate: function (selector, eventName, fn) {
 			return this.bind(eventName, function (e) {
 				jLim(this).find(selector).each(function () {
@@ -257,35 +259,35 @@ $.fn.extend(
 $.each(['load', 'unload', 'scroll', 'resize', 'error', 'blur', 'change', 'focus', 'select', 'submit', 'keydown', 'keypress', 'keyup',
 			'click', 'dblclick', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup'], function (i, eventName) {
 	/**
-	* Create core functions of the default events
-	*
-	* @name jLim.fn[eventName]
-	* @function
-	* @param {Function} fn
-	* @param {Number} [insertIndex] Insert function at given index
-	* @return {This}
-    *
-	* @exports $.fn[eventName] as jLim.fn.load
-	* @exports $.fn[eventName] as jLim.fn.unload
-	* @exports $.fn[eventName] as jLim.fn.scroll
-	* @exports $.fn[eventName] as jLim.fn.resize
-	* @exports $.fn[eventName] as jLim.fn.error
-	* @exports $.fn[eventName] as jLim.fn.blur
-	* @exports $.fn[eventName] as jLim.fn.change
-	* @exports $.fn[eventName] as jLim.fn.focus
-	* @exports $.fn[eventName] as jLim.fn.select
-	* @exports $.fn[eventName] as jLim.fn.submit
-	* @exports $.fn[eventName] as jLim.fn.keydown
-	* @exports $.fn[eventName] as jLim.fn.keypress
-	* @exports $.fn[eventName] as jLim.fn.keyup
-	* @exports $.fn[eventName] as jLim.fn.click
-	* @exports $.fn[eventName] as jLim.fn.dblclick
-	* @exports $.fn[eventName] as jLim.fn.mousedown
-	* @exports $.fn[eventName] as jLim.fn.mousemove
-	* @exports $.fn[eventName] as jLim.fn.mouseout
-	* @exports $.fn[eventName] as jLim.fn.mouseover
-	* @exports $.fn[eventName] as jLim.fn.mouseup
-	*/
+	 * Create core functions of the default events
+	 *
+	 * @name jLim.fn[eventName]
+	 * @function
+	 * @param {Function} fn
+	 * @param {Number} [insertIndex] Insert function at given index
+	 * @return {This}
+     *
+	 * @exports $.fn[eventName] as jLim.fn.load
+	 * @exports $.fn[eventName] as jLim.fn.unload
+	 * @exports $.fn[eventName] as jLim.fn.scroll
+	 * @exports $.fn[eventName] as jLim.fn.resize
+	 * @exports $.fn[eventName] as jLim.fn.error
+	 * @exports $.fn[eventName] as jLim.fn.blur
+	 * @exports $.fn[eventName] as jLim.fn.change
+	 * @exports $.fn[eventName] as jLim.fn.focus
+	 * @exports $.fn[eventName] as jLim.fn.select
+	 * @exports $.fn[eventName] as jLim.fn.submit
+	 * @exports $.fn[eventName] as jLim.fn.keydown
+	 * @exports $.fn[eventName] as jLim.fn.keypress
+	 * @exports $.fn[eventName] as jLim.fn.keyup
+	 * @exports $.fn[eventName] as jLim.fn.click
+	 * @exports $.fn[eventName] as jLim.fn.dblclick
+	 * @exports $.fn[eventName] as jLim.fn.mousedown
+	 * @exports $.fn[eventName] as jLim.fn.mousemove
+	 * @exports $.fn[eventName] as jLim.fn.mouseout
+	 * @exports $.fn[eventName] as jLim.fn.mouseover
+	 * @exports $.fn[eventName] as jLim.fn.mouseup
+	 */
 	$.fn[eventName] = function (fn, insertIndex) {
 		return fn ? this.bind(eventName, fn, insertIndex): this.trigger(eventName);
 	};
