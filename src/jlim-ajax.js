@@ -10,7 +10,7 @@
  * @author Victor Villaverde Laan
  * @link http://www.freelancephp.net/jlim-ajax-plugin/
  */
-(function ($, SimpleAjax) {
+(function ($, Ajax) {
 
 $.fn.extend(
 	/**
@@ -51,14 +51,14 @@ $.extend(
 		/**
 		 * @namespace jLim.Ajax
 		 */
-		Ajax: SimpleAjax,
+		Ajax: Ajax,
 
 		/**
 		 * Change the default ajax settings
 		 * @param {Object} settings Overwrite the default settings
 		 */
 		ajaxSetup: function (settings) {
-			$.extend(SimpleAjax.settings, settings);
+			$.extend(Ajax.settings, settings);
 		},
 
 		/**
@@ -67,8 +67,8 @@ $.extend(
 		 * @return {XMLHttpRequest|ActiveXObject}
 		 */
 		ajax: function (options) {
-			SimpleAjax.call(options);
-			return SimpleAjax.xhr;
+			Ajax.call(options);
+			return Ajax.xhr;
 		},
 
 		/**
