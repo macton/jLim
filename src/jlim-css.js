@@ -9,7 +9,7 @@
  * @author Victor Villaverde Laan
  * @link http://www.freelancephp.net/jlim-css-plugin/
  */
-(function ($) {
+(function (window, $) {
 
 $.fn.extend(
 	/**
@@ -48,7 +48,7 @@ $.fn.extend(
 		 * @return {Boolean}
 		 */
 		hasClass: function (value) {
-			return value && this.length && this.get(0).className.match(new RegExp( '(\\s|^)' + value + '(\\s|$)'));
+			return value && this.length && this.get(0).className.match(new RegExp('(\\s|^)' + value + '(\\s|$)'));
 		},
 
 		/**
@@ -66,13 +66,18 @@ $.fn.extend(
 				if (typeof cssProperty == 'string') {
 					// getter
 					if (this.length) {
-						if (d.defaultView && d.defaultView.getComputedStyle) {
-							key = cssProperty.toLowerCase();
-							return d.defaultView.getComputedStyle(this.get(0), '').getPropertyValue(key);
+						cssProperty = cssProperty.toLowerCase();
+						key = $.toCamelCase(cssProperty);
+
+						if (typeof this.get(0).style[key] != 'undefined') {
+							value = this.get(0).style[key];
+						} else if (d.defaultView && d.defaultView.getComputedStyle) {
+							value = d.defaultView.getComputedStyle(this.get(0), '').getPropertyValue(cssProperty);
 						} else if (this.get(0).currentStyle) {
-							key = $.toCamelCase(cssProperty);
-							return this.get(0).currentStyle[key];
+							value = this.get(0).currentStyle[key];
 						}
+
+						return value;
 					}
 
 					return null;
@@ -87,45 +92,28 @@ $.fn.extend(
 
 			// setter
 			return this.each(function () {
-				if (!this.style.cssText)
-					this.style.cssText +=  ';';
+				var key = $.toCamelCase(cssProperty);
 
-				this.style.cssText += cssProperty + ':' + value;
+				if (typeof this.style[key] != 'undefined') {
+					this.style[key] = value;
+				} else {
+					if (!this.style.cssText)
+						this.style.cssText +=  ';';
+
+					this.style.cssText += cssProperty + ':' + value;
+				}
 			});
 		},
 
 		/**
 		 * Set or get style(s) of the style attribute
-		 * @deprecated
+		 * @deprecated Use css() isntead
 		 * @param {String|Object} style
 		 * @param {Mixed} [value] Set new value
 		 * @return {This|String}
 		 */
 		style: function (style, value) {
-			var key;
-
-			// getter
-			if (typeof value == 'undefined') {
-				if (typeof style == 'string') {
-					// getter
-					key = $.toCamelCase(style);
-					return this.length ? this.get(0).style[key] : null;
-				} else {
-					// setter multiple styles
-					for (key in style)
-						this.style(key, style[key]);
-
-					return this;
-				}
-			}
-
-			// setter
-			key = $.toCamelCase(style);
-
-			return this.each(function () {
-				if (typeof this.style[key] != 'undefined')
-					this.style[key] = value;
-			});
+			return this.css(style, value);
 		}
 	}
 );
@@ -141,7 +129,7 @@ $.extend(
 		 * @param {String} str
 		 * @return {String} CamelCased
 		 */
-		toCamelCase: function(str) {
+		toCamelCase: function (str) {
 			return str.replace(/(\-[a-z])/g, function($1) {
 				return $1.toUpperCase().replace('-', '');
 			});
@@ -149,4 +137,4 @@ $.extend(
 	}
 );
 
-})(jLim);
+})(window, jLim);
