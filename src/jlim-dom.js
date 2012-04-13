@@ -17,11 +17,11 @@ $.fn.extend(
 	 */
 	{
 		/**
-		* Get or set attribute value
-		* @param {String} name
-		* @param {Mixed} [value] Set new value
-		* @return {This|Mixed}
-		*/
+		 * Get or set attribute value
+		 * @param {String} name
+		 * @param {Mixed} [value] Set new value
+		 * @return {This|Mixed}
+		 */
 		attr: function (name, value) {
 			// getter
 			if (typeof value == 'undefined') {
@@ -51,19 +51,19 @@ $.fn.extend(
 		},
 
 		/**
-		* Remove given attribute
-		* @param {String} name
-		* @return {This}
-		*/
+		 * Remove given attribute
+		 * @param {String} name
+		 * @return {This}
+		 */
 		removeAttr: function (name) {
 			return this.attr(name, null);
 		},
 
 		/**
-		* Get or set html of selected elements
-		* @param {String} [html] Set new html
-		* @return {This|String}
-		*/
+		 * Get or set html of selected elements
+		 * @param {String} [html] Set new html
+		 * @return {This|String}
+		 */
 		html: function (html) {
 			// getter
 			if (typeof html == 'undefined')
@@ -82,9 +82,9 @@ $.fn.extend(
 		},
 
 		/**
-		* Empty all content of selected elements
-		* @return {This}
-		*/
+		 * Empty all content of selected elements
+		 * @return {This}
+		 */
 		empty: function () {
 			var el;
 
@@ -99,10 +99,10 @@ $.fn.extend(
 		},
 
 		/**
-		* GEt or set text of selected elements
-		* @param {String} [text] Set new text
-		* @return {This|String}
-		*/
+		 * GEt or set text of selected elements
+		 * @param {String} [text] Set new text
+		 * @return {This|String}
+		 */
 		text: function (text) {
 			// getter
 			if (typeof text == 'undefined')
@@ -116,9 +116,9 @@ $.fn.extend(
 		},
 
 		/**
-		* Remove selected elements
-		* @return {This}
-		*/
+		 * Remove selected elements
+		 * @return {This}
+		 */
 		remove: function () {
 			return this.each(function () {
 				this.parentNode.removeChild(this);
@@ -126,10 +126,10 @@ $.fn.extend(
 		},
 
 		/**
-		* Append content to selected elements
-		* @param {String|DOMElement|DOMElement[]|jLim.fn.init} content
-		* @return {This}
-		*/
+		 * Append content to selected elements
+		 * @param {String|DOMElement|DOMElement[]|jLim.fn.init} content
+		 * @return {This}
+		 */
 		append: function (content) {
 			var $content = $(content);
 
@@ -147,10 +147,10 @@ $.fn.extend(
 		},
 
 		/**
-		* Prepend content to selected elements
-		* @param {String|DOMElement|DOMElement[]|jLim.fn.init} content
-		* @return {This}
-		*/
+		 * Prepend content to selected elements
+		 * @param {String|DOMElement|DOMElement[]|jLim.fn.init} content
+		 * @return {This}
+		 */
 		prepend: function (content) {
 			var $content = $(content);
 
@@ -167,30 +167,30 @@ $.fn.extend(
 		},
 
 		/**
-		* Append selected elements to given target
-		* @param {String|DOMElement|DOMElement[]|jLim.fn.init} content
-		* @return {This}
-		*/
+		 * Append selected elements to given target
+		 * @param {String|DOMElement|DOMElement[]|jLim.fn.init} content
+		 * @return {This}
+		 */
 		appendTo: function (target) {
 			$(target).append(this);
 			return this;
 		},
 
 		/**
-		* Prepend selected elements to given target
-		* @param {String|DOMElement|DOMElement[]|jLim.fn.init} target
-		* @return {This}
-		*/
+		 * Prepend selected elements to given target
+		 * @param {String|DOMElement|DOMElement[]|jLim.fn.init} target
+		 * @return {This}
+		 */
 		prependTo: function (target) {
 			$(target).prepend(this);
 			return this;
 		},
 
 		/**
-		* Insert selected elements after given target
-		* @param {String|DOMElement|DOMElement[]|jLim.fn.init} target
-		* @return {This}
-		*/
+		 * Insert selected elements after given target
+		 * @param {String|DOMElement|DOMElement[]|jLim.fn.init} target
+		 * @return {This}
+		 */
 		insertAfter: function (target) {
 			var $target = $(target),
 				self = this;
@@ -217,10 +217,10 @@ $.fn.extend(
 		},
 
 		/**
-		* Insert selected elements before given target
-		* @param {String|DOMElement|DOMElement[]|jLim.fn.init} target
-		* @return {This}
-		*/
+		 * Insert selected elements before given target
+		 * @param {String|DOMElement|DOMElement[]|jLim.fn.init} target
+		 * @return {This}
+		 */
 		insertBefore: function (target) {
 			var $target = $(target),
 				self = this;
@@ -240,30 +240,30 @@ $.fn.extend(
 		},
 
 		/**
-		* Insert content after selected elements
-		* @param {String|DOMElement|DOMElement[]|jLim.fn.init} content
-		* @return {This}
-		*/
+		 * Insert content after selected elements
+		 * @param {String|DOMElement|DOMElement[]|jLim.fn.init} content
+		 * @return {This}
+		 */
 		after: function (content) {
 			$(content).insertAfter(this);
 			return this;
 		},
 
 		/**
-		* Insert content before selected elements
-		* @param {String|DOMElement|DOMElement[]|jLim.fn.init} content
-		* @return {This}
-		*/
+		 * Insert content before selected elements
+		 * @param {String|DOMElement|DOMElement[]|jLim.fn.init} content
+		 * @return {This}
+		 */
 		before: function (content) {
 			$(content).insertBefore(this);
 			return this;
 		},
 
 		/**
-		* Replace selected elements with the given content
-		* @param {String|DOMElement|DOMElement[]|jLim.fn.init} content
-		* @return {This}
-		*/
+		 * Replace selected elements with the given content
+		 * @param {String|DOMElement|DOMElement[]|jLim.fn.init} content
+		 * @return {This}
+		 */
 		replaceWith: function (content) {
 			var $content = $(content);
 
@@ -280,9 +280,9 @@ $.fn.extend(
 		},
 
 		/**
-		* Clone selected elements
-		* @return {jLim.fn.init} Instance of the clone
-		*/
+		 * Clone selected elements
+		 * @return {jLim.fn.init} Instance of the clone
+		 */
 		clone: function () {
 			var els = [];
 
