@@ -363,12 +363,7 @@ $.extend(
 		 * @return {Boolean}
 		 */
 		itemExists: function (arr, item) {
-			for (var j = 0, max = arr.length; j < max; j++) {
-				if (arr[j] === item)
-					return true;
-			}
-
-			return false;
+			return SS.itemExists(arr, item);
 		},
 
 		/**
@@ -377,14 +372,7 @@ $.extend(
 		 * @return {Array}
 		 */
 		clearDuplicates: function (arr) {
-			var a = [];
-
-			for (var i = 0, max = arr.length; i < max; i++) {
-				if (!$.itemExists(a, arr[i]))
-					a.push(arr[i]);
-			}
-
-			return a;
+			return SS.clearDuplicates(arr);
 		},
 
 		/**
