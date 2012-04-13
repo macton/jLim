@@ -21,15 +21,15 @@ jLim(function ($) {
 	};
 
 	$('#btn-test3').get(0).onclick = function () {
-		$('p').eq(0).style('background-color', 'red');
+		$('p').eq(0).css('background-color', 'red');
 	};
 
 	$('#btn-test4').get(0).onclick = function () {
-		$('#styles').style({
+		$('#styles').css({
 			'color': 'green',
 			'font-weight': 'bold',
 			'background-color': '#ccc',
-			'text-transform': 'capitalize',
+			'text-transform': 'uppercase',
 			'text-decoration': 'underline'
 		});
 	};
