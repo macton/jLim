@@ -10,7 +10,7 @@
  * @link http://www.freelancephp.net/jlim-small-javascript-framework/
  * @link https://github.com/freelancephp/jLim
  */
-(function (window) {
+(function (window, SS, DOMReady) {
 
 /**
  * jLim factory function
@@ -19,29 +19,19 @@
  * @param {String|DOMElement|DOMElement[]} [context=document] !! Will be ignored if selector is not a string !!
  * @return {jLim.fn.init} New instance
  */
-function jLim(selector, context) {
-	return new jLim.fn.init(selector, context);
-};
-
-/**
- * Make jLim global
- * @ignore
- */
-window.jLim = jLim;
-
-if (!window.$) {
-	/**
-	* Add short name for jLim method
-	* @function
-	*/
-	window.$ = jLim;
-}
+var jLim = function (selector, context) {
+		return new jLim.fn.init(selector, context);
+	},
+	original$ = window.$,
+	$ = jLim,
+	$$ = SS.select,
+	document = window.document;
 
 /**
  * jLim functions
  * @namespace jLim.fn
  */
-jLim.fn = {
+$.fn = {
 
 	/**
 	 * @property {DOMElement[]} els Selected elements
@@ -72,33 +62,33 @@ jLim.fn = {
 		// get elements by selector
 		if (typeof selector == 'string'){
 			// trim spaces at the begin and end
-			selector = jLim.trim(selector);
+			selector = $.trim(selector);
 
 			if (selector == 'body' && ! context){
 				// set body
 				this.els = document.body;
 			} else if (selector.substr( 0, 1 ) == '<'){
 				// create element
-				this.els = jLim.create(selector);
+				this.els = $.create(selector);
 			} else {
 				// find elements
-				this.els = jLim.selector(selector, context);
+				this.els = $.selector(selector, context);
 			}
-		} else if (jLim.isFunction(selector)){
+		} else if ($.isFunction(selector)){
 			// set DOM ready function
-			jLim.ready( selector );
-		} else if (selector instanceof jLim.fn.init){
+			$.ready( selector );
+		} else if (selector instanceof $.fn.init){
 			this.els = selector.get();
 		} else {
 			this.els = selector;
 		}
 
 		// make sure elements property is an array
-		if (!jLim.isArray(this.els)) {
+		if (!$.isArray(this.els)) {
 			this.els = this.els ? [this.els] : [];
 		} else {
 			// remove doubles
-			this.els = jLim.clearDuplicates(this.els);
+			this.els = $.clearDuplicates(this.els);
 		}
 
 		// support for using jLim object as an array
@@ -141,7 +131,7 @@ jLim.fn = {
 	 * @return {This}
 	 */
 	each: function (fn) {
-		jLim.each(this.els, fn);
+		$.each(this.els, fn);
 		return this;
 	},
 
@@ -164,7 +154,7 @@ jLim.fn = {
 		var $new = this.chain(selector, context),
 			els = this.els.concat($new.get());
 
-		$new.els = jLim.clearDuplicates(els);
+		$new.els = $.clearDuplicates(els);
 		return $new;
 	},
 
@@ -230,13 +220,13 @@ jLim.fn = {
  * @memberOf jLim.fn
  * @deprecated Use .chain() method instead
  */
-jLim.fn.$ = jLim.fn.chain;
+$.fn.$ = $.fn.chain;
 
 /**
  * @class jLim.fn.init
  * @exports jLim.fn as this.prototype
  */
-jLim.fn.init.prototype = jLim.fn;
+$.fn.init.prototype = $.fn;
 
 /**
  * For extending objects
@@ -244,7 +234,7 @@ jLim.fn.init.prototype = jLim.fn;
  * @memberOf jLim.fn
  * @return {Object|Array}
  */
-jLim.extend = jLim.fn.extend = function () {
+$.extend = $.fn.extend = function () {
 	// target is current object if only one argument
 	var i = 0,
 		target = this,
@@ -276,8 +266,8 @@ jLim.extend = jLim.fn.extend = function () {
 
 			if (deep && typeof obj[item] == 'object' && obj[item] !== null) {
 				// item is also object, make copy
-				empty = jLim.isArray(obj[item]) ? [] : {};
-				target[item] = jLim.extend(deep, target[item] || empty, obj[item]);
+				empty = $.isArray(obj[item]) ? [] : {};
+				target[item] = $.extend(deep, target[item] || empty, obj[item]);
 			} else {
 				// copy property or method
 				target[item] = obj[item];
@@ -289,11 +279,20 @@ jLim.extend = jLim.fn.extend = function () {
 	return target;
 };
 
-jLim.extend(
+$.extend(
 	/**
 	 * @lends jLim
 	 */
 	{
+		/**
+		 * Prevent conflicts with $ namespace
+		 * @return jLim
+		 */
+		noConflict: function () {
+			window.$ = original$;
+			return jLim;
+		},
+
 		/**
 		 * Selector method
 		 * @param {String} selector
@@ -381,7 +380,7 @@ jLim.extend(
 			var a = [];
 
 			for (var i = 0, max = arr.length; i < max; i++) {
-				if (!jLim.itemExists(a, arr[i]))
+				if (!$.itemExists(a, arr[i]))
 					a.push(arr[i]);
 			}
 
@@ -408,4 +407,10 @@ jLim.extend(
 	}
 );
 
-})(window);
+/**
+ * Make jLim global
+ * @ignore
+ */
+window.jLim = window.$ = jLim;
+
+})(window, SimpleSelector, DOMReady);
