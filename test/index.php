@@ -9,10 +9,17 @@ $timestamp = time();
 	<title>jLim Test Suite</title>
 	<link rel="stylesheet" type="text/css" media="screen" href="qunit/qunit/qunit.css" />
 	<script type="text/javascript" src="qunit/qunit/qunit.js"></script>
+
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
 	<script type="text/javascript" src="../src/external/domready/src/domready.min.js"></script>
 	<script type="text/javascript" src="../src/external/simpleselector/src/simpleselector.min.js"></script>
+
 	<script type="text/javascript" src="../src/<?php echo ( $testMinified ) ? 'minified/jlim-core.min.js' : 'jlim-core.js' ?>?nocache=<?php echo $timestamp ?>"></script>
 	<script type="text/javascript" src="unit/jlim-core.js?nocache=<?php echo $timestamp ?>"></script>
+
+	<script type="text/javascript" src="../src/<?php echo ( $testMinified ) ? 'minified/jlim-css.min.js' : 'jlim-css.js' ?>?nocache=<?php echo $timestamp ?>"></script>
+	<script type="text/javascript" src="unit/jlim-css.js?nocache=<?php echo $timestamp ?>"></script>
 </head>
 <body id="body">
 	<h1 id="qunit-header">
