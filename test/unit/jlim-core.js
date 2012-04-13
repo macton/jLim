@@ -1,4 +1,4 @@
-(function () {
+(function ($) {
 
 module('Core');
 
@@ -7,24 +7,30 @@ function el(id) {
 	return document.getElementById(id);
 };
 
-
 test('Required objects and globals', function () {
 	expect(5);
 	ok(DOMReady, 'DOMReady');
-	ok($$, '$$ - SimpleSelector');
+	ok(SimpleSelector, '$$ - SimpleSelector');
 	ok(jLim, 'jLim');
 	ok(jLim.fn, 'jLim.fn');
-	deepEqual($, jLim);
+	ok($, '$');
 });
 
 /**
  * Static methods
  */
+test('$.noConflict()', function () {
+	expect(3);
+	deepEqual(window.$, jLim);
+	deepEqual($.noConflict(), jLim);
+	deepEqual(window.$, jQuery);
+});
 
 test('$.extend()', function () {
 	// object
 	var obj = {id: 10, name: 'obj1', child: {id: 11, name: 'childObj', child: false}};
 
+	expect(21);
 	deepEqual($.extend(obj, {}), obj);
 	deepEqual($.extend({}, obj), obj);
 	deepEqual($.extend({}, {}, obj), obj);
@@ -548,4 +554,4 @@ test('.end()', function () {
 	deepEqual($chainMore.end().end(), $sel);
 });
 
-})();
+})(jLim);
