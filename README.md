@@ -16,6 +16,7 @@ And also includes the external objects:
 
 * [DOMReady](https://github.com/freelancephp/DOMReady)
 * [SimpleSelector](https://github.com/freelancephp/SimpleSelector)
+* [SimpleAjax](https://github.com/freelancephp/SimpleAjax)
 
 
 How To Use?
