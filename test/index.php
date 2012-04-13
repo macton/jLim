@@ -1,5 +1,6 @@
 <?php
 $testMinified = isset($_GET['minified']);
+$testPackage = isset($_GET['package']);
 $timestamp = time();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -12,21 +13,29 @@ $timestamp = time();
 
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
+<?php if ($testPackage): ?>
+	<script type="text/javascript" src="../src/package/jlim.min.js"></script>
+<?php else: ?>
 	<script type="text/javascript" src="../src/external/domready/src/domready.min.js"></script>
 	<script type="text/javascript" src="../src/external/simpleselector/src/simpleselector.min.js"></script>
 
 	<script type="text/javascript" src="../src/<?php echo ( $testMinified ) ? 'minified/jlim-core.min.js' : 'jlim-core.js' ?>?nocache=<?php echo $timestamp ?>"></script>
-	<script type="text/javascript" src="unit/jlim-core.js?nocache=<?php echo $timestamp ?>"></script>
-
 	<script type="text/javascript" src="../src/<?php echo ( $testMinified ) ? 'minified/jlim-css.min.js' : 'jlim-css.js' ?>?nocache=<?php echo $timestamp ?>"></script>
+<?php endif; ?>
+
+	<script type="text/javascript" src="unit/jlim-core.js?nocache=<?php echo $timestamp ?>"></script>
 	<script type="text/javascript" src="unit/jlim-css.js?nocache=<?php echo $timestamp ?>"></script>
 </head>
 <body id="body">
 	<h1 id="qunit-header">
 		<a href="/jquery/test/index.php">jLim Test Suite</a>
 		<label>
-			<input type="checkbox" name="minified" <?php echo ( $testMinified ) ? 'checked="checked"' : '' ?> />
-			test minified version
+			<input type="checkbox" name="minified" <?php echo ($testMinified) ? 'checked="checked"' : '' ?> />
+			test Minified version
+		</label>
+		<label>
+			<input type="checkbox" name="package" <?php echo ($testPackage) ? 'checked="checked"' : '' ?> />
+			test Package version
 		</label>
 	</h1>
 	<h2 id="qunit-banner"></h2>
